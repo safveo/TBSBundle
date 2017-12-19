@@ -1,0 +1,86 @@
+{% set titre ='TimeBS' %}
+{% set sousTitre ='System Time Booking' %}
+{% set titreOnglet= 'Time Booking System - Mon temps' %}
+{% set numVersion= '3.0' %}
+{% set skin = 'skin-blue' %}
+{% set lienAcceuil= path('time_tbs_homepage') %}
+{% extends "::layout.html.twig" %}
+
+{# set variable for TABLEAU DES DEMANDES menu #}
+
+{% block title %}
+    | {{ parent() }}
+{% endblock %}
+
+{% block extraStylesheets %}
+    <style>
+        td {
+            vertical-align: middle !important;
+        }
+    </style>
+    <link href="{{ asset('bundles/timetbs/css/datepicker3.css') }} " rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
+    <link href="{{ asset('bundles/timetbs/css/select2.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('all/DataTables/datatables.css') }}" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
+          rel="stylesheet"/>
+{% endblock extraStylesheets %}
+
+{% block roles %}
+    {% if is_granted('ROLE_TBS_ETUDES_ADMIN') %}
+        Admin
+    {% endif %}
+    {% if is_granted('ROLE_TBS_ETUDES_MANAGER') %}
+        Manager
+    {% endif %}
+    {% if is_granted('ROLE_TBS_ETUDES_USER') %}
+        Collaborateur
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+    <ul class="sidebar-menu">
+        {% if is_granted('ROLE_TBS_ETUDES_USER') %}
+            <li class="treeview active">
+                <a href="{{ path('time_tbs_homepage') }}">
+                    <i class="glyphicon glyphicon glyphicon-time"></i>
+                    <span>Saisie des temps</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_TBS_ETUDES_MANAGER') %}
+            <li>
+                <a href="{{ path('time_tbs_manager') }}">
+                    <i class="glyphicon glyphicon glyphicon-user"></i>
+                    <span>Charge de l'équipe</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_TBS_ETUDES_ADMIN') %}
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-book"></i>
+                    <span>Administration</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu menu-close" style="display: none;">
+                    <li class="">
+                        <a href="{{ path('time_tbs_admin_service') }}">
+                            <i class="fa fa-square-o"></i>
+                            <span>Service</span>
+                        </a>
+                        <a href="{{ path('time_tbs_admin') }}">
+                            <i class="fa fa-square-o"></i>
+                            <span>Collaborateurs</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block extraJavascripts %}
+    <script type="text/javascript"
+            src="{{ asset ('bundles/timetbs/js/select2.min.js') }}"></script>
+{% endblock %}

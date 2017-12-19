@@ -1,0 +1,70 @@
+<div class="modal-header" style="background-color:#F5F5F5;border-radius:4px;">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Modifier le collaborateur</h4>
+</div>
+<div class="modal-body">
+    <div class="form-horizontal">
+        {{ form_start(form,{'action': path('time_tbs_admin_edit',{'id':user_tbs.id}), 'method': 'POST'}) }}
+
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="pwd">NOM Prénom :</label>
+            <div class="col-sm-6">
+                <label class="control-label" for="pwd" >{{ user_tbs.user.displayName }}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="pwd">Base horaire hebdomadaire :</label>
+            <div class="col-sm-6">
+                <label class="control-label" for="pwd" >{{  form_widget (form.weeklyWorkingHours ,{'attr':{'class':'form-control'}}) }}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="pwd">Pays :</label>
+            <div class="col-sm-6">
+                <label class="control-label" for="pwd" >{{ form_widget (form.pays ,{'attr':{'class':'form-control'}}) }}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="pwd">Pôle :</label>
+            <div class="col-sm-6">
+                {{ form_widget(form.tbs_pole ,{'attr':{'class':'form-control'}}) }}
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="pwd">Poste :</label>
+            <div class="col-sm-6">
+                {{ form_widget(form.tbs_poste ,{'attr':{'class':'form-control'}}) }}
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="pwd">Part de l'activité planifiable (en%):</label>
+            <div class="col-sm-6">
+                <label class="control-label" for="pwd" >{{ form_widget (form.capacityPercent ,{'attr':{'class':'form-control'}}) }}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="pwd">Taux horaire:</label>
+            <div class="col-sm-6">
+                <label class="control-label" for="pwd" >{{ form_widget (form.taux ,{'attr':{'class':'form-control'}}) }}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 col-md-offset-4">
+                <input type="submit" value="Modifier" class="btn btn-primary">
+            </div>
+        </div>
+        {{ form_end (form) }}
+    </div>
+</div>
+
+    <script>
+    $(".modal").on('hidden.bs.modal', function () {
+        $(".modal-body").html("");
+        $(this).data('bs.modal', null);
+    });
+</script>

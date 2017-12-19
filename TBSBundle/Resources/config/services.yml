@@ -1,0 +1,21 @@
+services:
+     my.success_handler:
+          class: User\UserBundle\Authentication\SuccessHandler
+          arguments:  [ "@router","@security.context"]
+
+     ws.dependency.manager:
+          class: Time\TBSBundle\Services\DependencyManager
+          arguments:
+                  - '@service_container'
+          calls:
+
+     ws.data.manager:
+          class: Time\TBSBundle\Services\WSDataManager
+          parent: 'ws.dependency.manager'
+
+     app.twig_extension:
+          class: Time\TBSBundle\Twig\AppExtension
+          public: false
+          tags:
+             - { name: twig.extension }
+          arguments: [@service_container]

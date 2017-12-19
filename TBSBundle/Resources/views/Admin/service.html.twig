@@ -1,0 +1,164 @@
+{% extends "TimeTBSBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil {{ parent() }}
+{% endblock %}
+{% block extraStylesheets %}
+    <link href="{{ asset('bundles/timetbs/css/style-tbs.css') }} " rel="stylesheet" type="text/css">
+    <link href="{{ asset('bundles/timetbs/css/select2.css') }}" rel="stylesheet"/>
+
+{% endblock %}
+
+{% block body %}
+
+    <section class="content">
+        <section id="polesection" class="content-header col-md-6">
+            <h1>Pôles</h1>
+            <div class="box-body">
+                <div class="box bottomScrool">
+                    <div class="box-body">
+                        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <table class="table table-condensed dataTable no-footer"
+                                   style="background-color:#ffffff" role="grid">
+                                <thead>
+                                <tr role="row">
+                                    <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1"
+                                        aria-sort="ascending" aria-label="#: activate to sort column descending">
+                                        Libéllé
+                                    </th>
+                                    <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1"
+                                        aria-sort="ascending" aria-label="#: activate to sort column descending">
+                                        Manager
+                                    </th>
+                                    <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1"
+                                        aria-label="Titre: activate to sort column ascending">Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                {% for pole in poles %}
+                                    <tr role="row" class="odd">
+                                        <td class="showCol">{{ pole.name }}</td>
+                                        <td class="showCol">{% for manager in managers %}
+                                                {% if pole == manager.tbsPole %}
+                                                    {{ manager.tbsUser.user.displayName }} <br> {% endif %}
+                                            {% endfor %}</td>
+                                        <td>
+                                            <a href="{{ path('time_tbs_admin_editPole',{'id':pole.id}) }}"
+                                               class="btn btn-primary a-btn-slide-text" data-toggle="modal"
+                                               data-target="#Editpole">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                <span><strong>Edit</strong></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                            <div>
+                                <a href="{{ path('time_tbs_admin_newPole') }}" class="btn btn-primary a-btn-slide-text"
+                                   data-toggle="modal"
+                                   data-target="#newpole">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Ajouter</strong></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content-header col-md-6">
+            <h1>Postes</h1>
+            <div class="box-body">
+                <div class="box bottomScrool">
+                    <div class="box-body">
+                        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <table class="table table-condensed dataTable no-footer"
+                                   style="background-color:#ffffff" role="grid">
+                                <thead>
+                                <tr role="row">
+                                    <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1"
+                                        aria-sort="ascending" aria-label="#: activate to sort column descending">
+                                        Libéllé
+                                    </th>
+                                    <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1"
+                                        aria-label="Titre: activate to sort column ascending">Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                {% for poste in postes %}
+                                    <tr role="row" class="odd">
+                                        <td class="showCol">{{ poste }}</td>
+                                        <td>
+                                            <a href="{{ path('time_tbs_admin_editPoste',{'id':poste.id}) }}"
+                                               class="btn btn-primary a-btn-slide-text" data-toggle="modal"
+                                               data-target="#Editposte">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                <span><strong>Edit</strong></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div>
+                                <a href="{{ path('time_tbs_admin_newPoste') }}" class="btn btn-primary a-btn-slide-text"
+                                   data-toggle="modal"
+                                   data-target="#newposte">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Ajouter</strong></span>
+                                </a>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <div class="modal fade" id="newpole" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#F5F5F5;border-radius:4px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="newposte" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#F5F5F5;border-radius:4px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Editpole" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#F5F5F5;border-radius:4px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Editposte" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#F5F5F5;border-radius:4px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

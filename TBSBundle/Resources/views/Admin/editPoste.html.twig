@@ -1,0 +1,40 @@
+<div class="modal-header" style="background-color:#F5F5F5;border-radius:4px;">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Modifier un Poste</h4>
+</div>
+<div class="modal-body">
+    <div class="form-horizontal">
+        {{ form_start(form,{'action': path('time_tbs_admin_editPoste',{'id':poste.id}), 'method': 'POST'}) }}
+        <div class="form-group">
+            <label class="control-label col-sm-4 col-md-4" for="pwd">Libéllé :</label>
+            <div class="col-sm-8 col-md-8">
+                <label class="control-label"
+                       for="pwd">{{ form_widget (form.name ,{'attr':{'class':'form-control'}}) }}</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-6 col-md-offset-4">
+                <input type="submit" value="Modifier" class="btn btn-primary">
+                {% if supp %}
+                    <a href="#" class="btn btn-danger"
+                       disabled="true">Supprimer</a>
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right"
+                          title="Ce Poste ne peut être supprimé car un utilisateur (au moins) y est encore affecté. Pour pouvoir être supprimé, ce poste doit être vide."></span>
+                {% else %}
+                    <a href="{{ path('time_tbs_admin_removePoste',{'id':poste.id}) }}"
+                       class="btn btn-danger">Supprimer</a>
+                {% endif %}
+            </div>
+        </div>
+        {{ form_end (form) }}
+    </div>
+</div>
+
+{#<script>#}
+    {#$(".modal").on('hidden.bs.modal', function () {#}
+        {#$(".modal-body").html("");#}
+        {#$(this).data('bs.modal', null);#}
+    {#});#}
+{#</script>#}

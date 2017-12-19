@@ -1,0 +1,7 @@
+# Slim ben Abdelwahed <abdelwahed_sl@veowordwide.com>
+parameters:
+
+# add custom pagination view
+    knp_paginator.template.pagination: SuiviEtudesBundle:Partial:Pagination/pagination.html.twig
+    nbdemande: 10
+    nbcollaborateur: 10

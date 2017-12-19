@@ -1,0 +1,163 @@
+{% extends "TimeTBSBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil {{ parent() }}
+{% endblock %}
+{% block extraStylesheets %}
+    <link href="{{ asset('bundles/timetbs/css/style-tbs.css') }} " rel="stylesheet" type="text/css">
+    <link href="{{ asset('bundles/timetbs/css/datepicker3.css') }} " rel="stylesheet" type="text/css">
+    <link href="{{ asset('bundles/timetbs/css/bootstrap-editable.css') }} " rel="stylesheet" type="text/css">
+    <style>
+        hr {
+            border-bottom: 2px solid #f4f4f4;
+        !important;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+
+    <section class="content">
+
+
+        <section class="content-header">
+            <h1>Mon temps</h1>
+            <div class="box-body">
+                <div class="form-group pull-left">
+                    <a href="{{ path('time_tbs_filter',{'date': date|date_modify("-1 month")|date('Y-m')}) }}"
+                       class="btn btn-primary">Precedent</a>
+                </div>
+                <div class="form-group col-xs-6 col-sm-4 col-md-2">
+                    <div id="datePicker" class="input-group input-append date">
+                        <input type="text" name="date" class="form-control col-lg-6" data-fv-field="date"
+                               id="datepicker" disabled="" value="{{ date|date('Y-m') }}">
+                        <span class="input-group-addon add-on btn"><span
+                                    class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+                <a href="{{ path('time_tbs_filter',{'date': date|date_modify("+1 month")|date('Y-m')}) }}"
+                   class="btn btn-primary">Suivant</a>
+            </div>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="WEB">
+                    <div class="box">
+                        <div class="box-body">
+                            <div role="grid" class="dataTables_wrapper form-inline">
+                                <div class="table-responsive">
+                                    <table class="table  dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="4" style="cursor: pointer;">Sujet(s)</th>
+                                            <th colspan="4" style="cursor: pointer;">Plannification</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Demande(s)</th>
+                                            <th>Rôle</th>
+                                            <th>Planifiée(s)</th>
+                                            <th>Réalisée(s)</th>
+                                            <th>A saisir</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                        <tr>
+                                            <td>{% for planification in planifications %}<a
+                                                        href="#">{{ planification.DemandeUser.demande.id }}
+                                                    - {{ planification.DemandeUser.demande.titre }}
+                                                    <hr> {% endfor %}</a>
+                                            </td>
+
+                                            <td> {% for planification in planifications %} {{ planification.DemandeUser.type }}
+                                                    <hr> {% endfor %}</td>
+
+                                            <td>{% for planification in planifications %}{{ getNumberOfHours(planification.hoursPlanified ) }}
+                                                    <hr>{% endfor %}</td>
+                                            <td>{% for planification in planifications %}
+                                                    {% if monthbeforeandafter(date) %}
+                                                        <a href="#" id="realise"
+                                                           data-id="{{ planification.DemandeUser.id }}"
+                                                           class="editable editable-click">{{ getNumberOfHours(planification.hoursWorked ) }}</a>
+                                                    {% else %}
+                                                        <span>{{ getNumberOfHours(planification.hoursWorked ) }}</span>
+                                                    {% endif %}
+                                                    <hr>{% endfor %}</td>
+                                            <td rowspan="5"> {{ hours }}</td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                    {# display navigation #}
+                                    <div class="navigation">
+                                        {{ knp_pagination_render(planifications) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+{% endblock %}
+{% block extraJavascripts %}
+
+    <script type="text/javascript" src="{{ asset('all/DataTables/datatables.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/timetbs/js/bootstrap-editable.js') }}"></script>
+
+
+    <script>
+        $(function () {
+            var datatable = $('.dataTable').DataTable({
+                "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                language: {
+                    emptyTable: "<span class='text-blue'><b>Aucune donnée disponible</b></span>",
+                    info: "<h4>-- _MAX_ résultats.</h4>",
+                },
+                order: [[0, "desc"]], // order by demandeId at first
+                bPaginate: false, // remove pagination
+                bInfo: true, // remove total no of results
+                bFilter: false //  search box
+            });
+            $('.dataTable').css({'width': '100%'});
+        });
+    </script>
+    <script type="text/javascript" src="{{ asset ('bundles/timetbs/js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/timetbs/js/bootstrap-datepicker.fr.js') }}"></script>
+    <script>
+        $(function () {
+            $('#datePicker').datepicker({
+                format: 'yyyy-mm',
+                clearBtn: true,
+                language: "fr",
+                minViewMode: "months"
+            });
+            $('#datePicker').on('changeDate', function () {
+                var date = $('#datepicker').val();
+                route = "{{ path('time_tbs_filter',{'date': 'PLACEHOLDER'}) }}";
+                return window.location.href = route.replace("PLACEHOLDER", date);
+            });
+        });
+    </script>
+    <script>
+
+        $.fn.editable.defaults.mode = 'inline';
+        $(document).ready(function () {
+
+            $('.editable-click').editable({
+                validate: function (value) {
+                    var id = $(this).attr('data-id');
+                    $.ajax({
+                        url: '{{ path('time_tbs_edit_hoursworked') }}',
+                        data: {idDemande: id, editvalue: value}
+                    })
+                }
+
+            });
+        });
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,69 @@
+time_tbs_homepage:
+    path:     /{page}
+    defaults: { _controller: TimeTBSBundle:Default:index, page: 1 }
+
+time_tbs_filter:
+    path:     /{page}/{date}
+    defaults: { _controller: TimeTBSBundle:Default:filter, page: 1 }
+
+time_tbs_manager:
+    path:     /manager/{page}/charger
+    defaults: { _controller: TimeTBSBundle:Manager:index, page: 1 }
+
+time_tbs_filter_manager:
+    path:     manager/{page}/{date}
+    defaults: { _controller: TimeTBSBundle:Manager:filter, page: 1 }
+
+time_tbs_admin:
+    path:     admin/collaborateurs/{page}/list
+    defaults: { _controller: TimeTBSBundle:Admin:collaborateur, page: 1 }
+
+time_tbs_admin_edit:
+    path:     admin/collaborateurs/{id}/edit
+    defaults: { _controller: TimeTBSBundle:Admin:editUser }
+    methods:  [GET, POST]
+
+time_tbs_admin_service:
+    path:     admin/service/administration
+    defaults: { _controller: TimeTBSBundle:Admin:service }
+    methods:  [GET, POST]
+
+time_tbs_admin_editPole:
+    path:     admin/pole/{id}/edit
+    defaults: { _controller: TimeTBSBundle:Admin:editPole }
+    methods:  [GET, POST]
+
+time_tbs_admin_newPole:
+    path:     admin/pole/new
+    defaults: { _controller: TimeTBSBundle:Admin:newPole }
+    methods:  [GET, POST]
+
+time_tbs_admin_newPoste:
+    path:     admin/poste/new
+    defaults: { _controller: TimeTBSBundle:Admin:newPoste }
+    methods:  [GET, POST]
+
+time_tbs_admin_removePole:
+    path:     admin/pole/{id}/delete
+    defaults: { _controller: TimeTBSBundle:Admin:deletePole }
+    methods:  [GET, POST]
+
+time_tbs_admin_editPoste:
+    path:     admin/poste/{id}/edit
+    defaults: { _controller: TimeTBSBundle:Admin:editPoste }
+    methods:  [GET, POST]
+
+time_tbs_admin_removePoste:
+    path:     admin/poste/{id}/delete
+    defaults: { _controller: TimeTBSBundle:Admin:deletePoste }
+    methods:  [GET, POST]
+
+time_tbs_edit_hoursworked:
+    path:     admin/hoursWorked/editable
+    defaults: { _controller: TimeTBSBundle:Default:EditHoursWorked }
+    methods:  [GET, POST]
+time_tbs_edit_hoursplanified:
+    path:     admin/hoursWorked/planified
+    defaults: { _controller: TimeTBSBundle:Manager:EditHoursPlanified }
+    methods:  [GET, POST]
+

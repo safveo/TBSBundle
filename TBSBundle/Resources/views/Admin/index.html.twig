@@ -1,0 +1,124 @@
+{% extends "TimeTBSBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil {{ parent() }}
+{% endblock %}
+{% block extraStylesheets %}
+    <link href="{{ asset('bundles/timetbs/css/style-tbs.css') }} " rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+
+    <section class="content-header">
+        <h1>Collaborateurs</h1>
+        <div class="box-body">
+            <div class="box bottomScrool">
+
+                <div class="box-body">
+                    <div id="listDemandes_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <table class="table table-condensed dataTable no-footer" style="background-color:#ffffff" role="grid">
+                            <thead>
+                            <tr role="row">
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">NOM Prénom</th>
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">Base horaire hebdomadaire</th>
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">Pays</th>
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">Pôle</th>
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">Poste</th>
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">Taux horaire</th>
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">Part de l'activité planifiable (en %)</th>
+                                <th style="cursor: pointer" class="showCol" rowspan="1" colspan="1">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody role="alert" aria-live="polite" aria-relevant="all">
+                            {% for user in users %}
+                            <tr role="row" class="odd">
+                                <td class="showCol">{{ user.user.displayName }} </td>
+                                <td>{{ (user.WeeklyWorkingHours) }}</td>
+                                <td>{{ user.user.CountryWorking|upper }}</td>
+                                <td> {% if user.TbsPole != null  %}{{ user.TbsPole.Name }}
+                                {% else %} -
+                                {% endif %}</td>
+                                <td>{% if user.TbsPoste != null  %}{{ user.TbsPoste.Name }}
+                                    {% else %} -
+                                    {% endif %}</td>
+                                <td>{{ user.TbsPoste.HourlyRate }}</td>
+                                <td>{{ user.capacityPercent }}</td>
+                                <td>
+                                    <a href="{{ path('time_tbs_admin_edit',{'id':user.id}) }}" class="btn btn-primary a-btn-slide-text" data-toggle="modal" data-target="#setCollab">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <span><strong>Edit</strong></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {#<div class="navigation">#}
+                            {#{{ knp_pagination_render(paginations) }}#}
+                        {#</div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="setCollab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color:#F5F5F5;border-radius:4px;">
+
+					</div>
+                </div>
+            </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+    {% block extraJavascripts %}
+        <script type="text/javascript" src="{{ asset('all/DataTables/datatables.js') }}"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+        <script>
+            $(function () {
+                var datatable = $('.dataTable').DataTable({
+                    "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                    language: {
+                        emptyTable: "<span class='text-blue'><b>Aucune donnée disponible</b></span>",
+                        info: "<h4>-- _MAX_ résultats.</h4>",
+                    },
+                    order: [[0, "desc"]], // order by demandeId at first
+                    bPaginate: false, // remove pagination
+                    bInfo: true, // remove total no of results
+                    bFilter: false //  search box
+                });
+                $('.dataTable').css({'width': '100%'});
+            });
+        </script>
+        <script type="text/javascript"
+                src="{{ asset ('bundles/timetbs/js/bootstrap-datepicker.js') }}"></script>
+        <script type="text/javascript"
+                src="{{ asset('bundles/timetbs/js/bootstrap-datepicker.fr.js') }}"></script>
+        <script>
+            $(function () {
+                $('#datePicker').datepicker({
+                    format: 'yyyy-mm',
+                    clearBtn: true,
+                    language: "fr",
+                    minViewMode: "months"
+                });
+                $('#datePicker').on('changeDate', function () {
+                    var date = $('#datepicker').val();
+                    route = "{{ path('time_tbs_filter_manager',{'date': 'PLACEHOLDER'}) }}";
+                    return window.location.href = route.replace("PLACEHOLDER", date);
+                });
+            });
+        </script>
+       <script>
+           $(".modal").on('hidden.bs.modal', function () {
+               $(this).data('bs.modal', null);
+           });
+       </script>
+
+    {% endblock %}
