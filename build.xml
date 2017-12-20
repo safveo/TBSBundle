@@ -17,7 +17,7 @@
         depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-parallel"
-        depends="build-common,tools-parallel" />
+        depends="build-common" />
 
     <target name="build-parallel-clean"
         depends="clean,build-common,tools-parallel" />
