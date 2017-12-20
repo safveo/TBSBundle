@@ -143,7 +143,9 @@
         <exec executable="phploc">
            <arg value="--log-csv" />
            <arg value="${build-dir}/logs/phploc.csv" />
-           <arg path="${src-dir}" />
+		    <arg value="--log-xml" />
+            <arg path="${basedir}/build/logs/phploc.xml" />
+            <arg path="${src-dir}" />
         </exec>
     </target>
 
