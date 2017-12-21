@@ -140,7 +140,7 @@
     </target>
 	<target name="phpdoc" description="Generate API documentation using PHPDocumentor">
   <exec executable="phpdoc">
-  <arg value="--directory=${basedir}/src" />
+  <arg value="--directory=${src-dir}" />
    <arg value="--target=${basedir}/build/api" />
    <arg value="--extensions=php" />
   </exec>
