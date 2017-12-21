@@ -33,7 +33,7 @@
             </sequential>
             <antcall target="phpcb" />
             <antcall target="phpcpd" />
-            <antcall target="phpdox" />
+            <antcall target="phpdoc" />
             <antcall target="phploc" />
         </parallel>
     </target>
@@ -138,6 +138,12 @@
             <arg value="${build-dir}/phpdox.xml" />
         </exec>
     </target>
+	<target name="phpdoc" description="Generate API documentation using PHPDocumentor">
+  <exec executable="phpdoc">
+  
+   <arg value="--extensions=php" />
+  </exec>
+ </target>
 
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
