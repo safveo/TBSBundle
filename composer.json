@@ -26,7 +26,7 @@
     },
     "require-dev": {
         "filp/whoops": "^1.1 || ^2.0",
-        "phpunit/phpunit": "^4.7",
+        "phpunit/phpunit": "^4.3",
         "zendframework/zend-coding-standard": "~1.0.0",
         "zendframework/zend-expressive-aurarouter": "^1.0",
         "zendframework/zend-expressive-fastroute": "^1.0",
