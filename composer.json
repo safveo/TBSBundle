@@ -62,5 +62,8 @@
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-clover clover.xml",
         "license-check": "vendor/bin/docheader check src/"
+    },
+	 "config": {
+        "platform": {"php": "5.6"}
     }
 }
