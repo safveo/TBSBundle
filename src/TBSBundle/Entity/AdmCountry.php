@@ -60,6 +60,4 @@ class AdmCountry
     {
         $this->name = $name;
     }
-
-
 }
