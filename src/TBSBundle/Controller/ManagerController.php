@@ -160,7 +160,7 @@ class ManagerController extends Controller
         $em->persist($planification);
         $em->flush();
 
-        die;
+       // die;
 
     }
 
