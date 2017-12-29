@@ -93,7 +93,6 @@ class AdminController extends Controller
              * redirect after submitted
              */
             return new RedirectResponse($this->generateUrl('time_tbs_admin'));
-
         }
         return $this->render('TimeTBSBundle:Admin:edit.html.twig', array(
             'form' => $form->createView(),
@@ -186,7 +185,6 @@ class AdminController extends Controller
                 ));
                 $em->remove($manager);
                 $em->flush();
-
             }
             /**
              * add flash message after updated user
@@ -196,7 +194,6 @@ class AdminController extends Controller
              * redirect after submitted
              */
             return new RedirectResponse($this->generateUrl('time_tbs_admin_service'));
-
         }
         return $this->render('TimeTBSBundle:Admin:editPole.html.twig', array(
             'form' => $form->createView(),
@@ -256,7 +253,6 @@ class AdminController extends Controller
              * redirect after submitted
              */
             return new RedirectResponse($this->generateUrl('time_tbs_admin_service'));
-
         }
         return $this->render('TimeTBSBundle:Admin:addPole.html.twig', array(
             'form' => $form->createView(),
@@ -306,7 +302,6 @@ class AdminController extends Controller
              * redirect after submitted
              */
             return new RedirectResponse($this->generateUrl('time_tbs_admin_service'));
-
         }
         return $this->render('TimeTBSBundle:Admin:addPoste.html.twig', array(
             'form' => $form->createView(),
@@ -332,7 +327,6 @@ class AdminController extends Controller
         $em->flush();
         $this->get('session')->getFlashBag()->add('success', "Pole supprimé avec succés.");
         return new RedirectResponse($this->generateUrl('time_tbs_admin_service'));
-
     }
 
     public function editPosteAction(Request $request, $id)
@@ -369,7 +363,6 @@ class AdminController extends Controller
              * redirect after submitted
              */
             return new RedirectResponse($this->generateUrl('time_tbs_admin_service'));
-
         }
         return $this->render('TimeTBSBundle:Admin:editPoste.html.twig', array(
             'form' => $form->createView(),
