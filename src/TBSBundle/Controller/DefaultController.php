@@ -223,7 +223,7 @@ class DefaultController extends Controller
         $em->persist($planification);
         $em->flush();
 
-        die;
+        //die;
 
     }
 
