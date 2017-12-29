@@ -37,25 +37,25 @@ class ManagerController extends Controller
          * demandes planified orderBy demande
          */
         foreach ($usrs as $usr) {
-            $output = new \stdClass();
-            $output->planifications = $datamanager->getPlanification($usr->getUser());
-            $output->planificationsLastMonth = $datamanager->getfilerPlanification($date_last_month, $usr->getUser());
-            $output->user = $usr;
-            $output->hours = $datamanager->getHoursforUser($date, $usr->getUser());
-            $output->hours_capacity = round($datamanager->getHoursforUser($date, $usr->getUser()) * $usr->getCapacityPercent() / 100);
-            $planifications_manager[] = $output;
+            $output1 = new \stdClass();
+            $output1->planifications = $datamanager->getPlanification($usr->getUser());
+            $output1->planificationsLastMonth = $datamanager->getfilerPlanification($date_last_month, $usr->getUser());
+            $output1->user = $usr;
+            $output1->hours = $datamanager->getHoursforUser($date, $usr->getUser());
+            $output1->hours_capacity = round($datamanager->getHoursforUser($date, $usr->getUser()) * $usr->getCapacityPercent() / 100);
+            $planifications_manager[] = $output1;
         }
         /**
          * get number of rows in table
          */
-        $nbPerPage = $this->container->getParameter('nbdemande');
+        $nbPerPage1 = $this->container->getParameter('nbdemande');
         /**
          * knp_paginator generate pagination from users and nuber of rows in one table
          */
         $paginator = $this->get('knp_paginator');
         $users = $paginator->paginate(
             $usrs, $request->query->getInt('page', $page)/* page number */
-            , $nbPerPage/* limit per page */
+            , $nbPerPage1/* limit per page */
         );
 
         return $this->render('TimeTBSBundle:Manager:index.html.twig', array(
