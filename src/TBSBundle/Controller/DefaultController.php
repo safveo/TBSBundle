@@ -65,14 +65,14 @@ class DefaultController extends Controller
          */
         $result = ($datamanager->getHoursforUser($date, $user) * $percent) / 100;
 
-        $planifications = $datamanager->getPlanification($user);
+        $planifications1 = $datamanager->getPlanification($user);
 
         /**
          * calculate hours realisé in all demandes
          */
 
         $hours_worked = 0;
-        foreach ($planifications as $planification) {
+        foreach ($planifications1 as $planification) {
             $hour_worked_demande = strtotime($planification->getHoursWorked());
             $d= date('H', $hour_worked_demande);
             $date_modif= clone $date_first;
@@ -91,9 +91,9 @@ class DefaultController extends Controller
         /**
          * Pagination
          */
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $planifications, $request->query->getInt('page', $page)/* page number */
+        $paginator1 = $this->get('knp_paginator');
+        $pagination = $paginator1->paginate(
+            $planifications1, $request->query->getInt('page', $page)/* page number */
             , $nbPerPage/* limit per page */
         );
         return $this->render('TimeTBSBundle:Default:index.html.twig', array(
