@@ -10,6 +10,6 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-var_dump('welcome user');die;
+//var_dump('welcome user');die;
     }
 }
